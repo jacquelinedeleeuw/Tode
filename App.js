@@ -1,10 +1,8 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { StyleSheet } from 'react-native'
 import WelcomeScreen from './app/screens/WelcomeScreen'
 import Swiper from './app/screens/Swiper'
-import { LinearGradient } from 'expo-linear-gradient'
 
 const Stack = createStackNavigator()
 
@@ -17,18 +15,22 @@ function App() {
           component={WelcomeScreen} 
           options={{
             title: 'My home',
-            headerStyle: {
-              backgroundColor: '#80DED0',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
+            headerShown: false
+            // headerStyle: {
+            //   backgroundColor: '#80DED0',
+            // },
+            // headerTintColor: '#fff',
+            // headerTitleStyle: {
+            //   fontWeight: 'bold',
+            // },
           }}
         />
         <Stack.Screen 
           name="Swiper" 
           component={Swiper} 
+          // options={{
+          //   headerShown: false
+          // }}
         />
       </Stack.Navigator>
     </NavigationContainer>

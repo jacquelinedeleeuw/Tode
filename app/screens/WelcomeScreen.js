@@ -33,12 +33,11 @@ function WelcomeScreen({ navigation }) {
         style={{
           flex: 0.5,
           flexDirection: 'row',
-          marginBottom: -500
+          marginBottom: -550
         }}>
         <Image
           style={styles.tinyLogo}
           source={Logo}
-        
         />
         <Text style={styles.text}>tode</Text>
       </View>
@@ -82,7 +81,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '700',
     letterSpacing: -1
-
   },
   subtext: {
     fontFamily: 'GothamRoundedBook',
