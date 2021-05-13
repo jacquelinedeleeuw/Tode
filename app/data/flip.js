@@ -1,10 +1,8 @@
 const flip = [
   {
-    type: 'flip',
-    question: 'Swipe up to start',
-    answer: 'I said swipe up, not click to start!'
-  },
-  {
+    type: 'start',
+    question: 'Swipe to start'
+  },{
     type: 'flip',
     question: 'What is CSS?',
     answer: 'CSS stands for Cascading Style Sheets. CSS is used to define styles for your web pages, including the design, layout and variations in display for different devices and screen sizes. CSS was intended to allow web professionals to separate the content and structure of a website\'s code from the visual design.'

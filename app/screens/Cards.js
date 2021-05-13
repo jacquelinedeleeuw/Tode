@@ -3,8 +3,10 @@ import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import { Button } from 'galio-framework'
 import FlipCard from 'react-native-flip-card'
+import { responsiveFontSize } from 'react-native-responsive-dimensions'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
+const { width, fontScale } = Dimensions.get('window')
 
 export default function Cards({ card }) {
 
@@ -31,6 +33,11 @@ export default function Cards({ card }) {
 
   return (
     <View>
+      {card.type === 'start' &&
+      <View style={styles.card}>
+        <Text style={styles.question}>{card.question}</Text>
+      </View>
+      }
       {card.type === 'boolean' &&
       <View style={styles.card}>
         <Text style={styles.question}>{card.question}</Text>
@@ -101,35 +108,10 @@ const styles = StyleSheet.create({
   },
   question: {
     fontFamily: 'GothamRoundedBook',
-    fontSize: 30
+    fontSize: responsiveFontSize(4)
   },
   answer: {
     fontFamily: 'GothamRoundedBook',
-    fontSize: 15
+    fontSize: responsiveFontSize(3)
   }
 })
-
-
-
-// questionArray.map(item => {
-//   questions.push(
-//     <View style={styles.card}>
-//       <Text style={styles.question}>{item.question}</Text>
-//       <Text style={styles.answer}>{item.answer}</Text>
-//     </View>
-//   )
-// })
-
-// multipleChoice.map(item => {
-//   questions.push(
-//     <View style={styles.card}>
-//       <Text style={styles.question}>{item.question}</Text>
-//       <Button>{item.correct_answer}</Button>
-//       <Button>{item.incorrect_answers[0]}</Button>
-//       <Button>{item.incorrect_answers[1]}</Button>
-//       <Button>{item.incorrect_answers[2]}</Button>
-//     </View>
-//   )
-// })
-
-// DONT FORGET TO SHUFFLE ARRAY
