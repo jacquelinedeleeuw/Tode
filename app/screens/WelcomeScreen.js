@@ -33,7 +33,7 @@ function WelcomeScreen({ navigation }) {
         style={{
           flex: 0.5,
           flexDirection: 'row',
-          marginBottom: -550
+          marginBottom: -350
         }}>
         <Image
           style={styles.tinyLogo}
