@@ -12,8 +12,8 @@ import Logo from '../assets/logo.png'
 function WelcomeScreen({ navigation }) {
 
   const [loaded] = useFonts({
-    GothamRoundedBook: require('../assets/fonts/GothamRoundedBook.ttf'),
-    GothamRoundedBold: require('../assets/fonts/GothamRoundedBold.ttf')
+    GothamRoundedBold: require('../assets/fonts/GothamRoundedBold.ttf'),
+    GothamRoundedBook: require('../assets/fonts/GothamRoundedBook.ttf')
   })
 
   if (!loaded) {
