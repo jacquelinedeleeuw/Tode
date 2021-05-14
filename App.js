@@ -28,6 +28,16 @@ function App() {
         <Stack.Screen 
           name="Swiper" 
           component={Swiper} 
+          options={{
+            title: 'Tode'
+            // headerStyle: {
+            //   backgroundColor: '#80DED0',
+            // },
+            // headerTintColor: '#fff',
+            // headerTitleStyle: {
+            //   fontWeight: 'bold',
+            // },
+          }}
           // options={{
           //   headerShown: false
           // }}

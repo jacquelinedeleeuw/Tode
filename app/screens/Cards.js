@@ -1,13 +1,13 @@
 /* eslint-disable react/jsx-key */
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import { Button } from 'galio-framework'
 import FlipCard from 'react-native-flip-card'
 import { responsiveFontSize } from 'react-native-responsive-dimensions'
-import color from 'color'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
-const { width, fontScale } = Dimensions.get('window')
+// const { width, fontScale } = Dimensions.get('window')
 
 export default function Cards({ card }) {
 
@@ -46,7 +46,7 @@ export default function Cards({ card }) {
           onPress={() => handleAnswer('True', card.correct_answer, setOptionOne)}
           color={optionOne}
           style={styles.buttonStyles}
-        >True</Button>
+        > </Button>
         <Button
           onPress={() => handleAnswer('False', card.correct_answer, setOptionTwo)}
           color={optionTwo}
@@ -128,8 +128,9 @@ const styles = StyleSheet.create({
   },
   buttonStyles: {
     borderRadius: 20,
-    borderWidth: 1,
+    
     width: 280,
-    height: 50
+    height: 50,
+    backgroundColor: '#00A0FF'
   }
 })
