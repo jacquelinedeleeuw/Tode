@@ -76,20 +76,20 @@ const styles = StyleSheet.create({
     height: '110%'
   },
   text: {
-    fontFamily: 'GothamRoundedBold',
+    // fontFamily: 'GothamRoundedBold',
     fontSize: 50,
     color: 'white',
     fontWeight: '700',
     letterSpacing: -1
   },
   subtext: {
-    fontFamily: 'GothamRoundedBook',
+    // fontFamily: 'GothamRoundedBook',
     fontSize: 20,
     color: 'white',
     marginBottom: 40
   },
   button: {
-    fontFamily: 'GothamRoundedBook',
+    // fontFamily: 'GothamRoundedBook',
     color: '#00A0FF',
     fontSize: 18
   },
