@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import { Button } from 'galio-framework'
 import FlipCard from 'react-native-flip-card'
 import { responsiveFontSize } from 'react-native-responsive-dimensions'
-import { LinearGradient } from 'expo-linear-gradient'
+
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
 // const { width, fontScale } = Dimensions.get('window')
@@ -128,9 +128,7 @@ const styles = StyleSheet.create({
   },
   buttonStyles: {
     borderRadius: 20,
-    
     width: 280,
-    height: 50,
-    backgroundColor: '#00A0FF'
+    height: 50
   }
 })
