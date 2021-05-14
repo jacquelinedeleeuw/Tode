@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import { Button } from 'galio-framework'
 import FlipCard from 'react-native-flip-card'
 import { responsiveFontSize } from 'react-native-responsive-dimensions'
+import color from 'color'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const { width, fontScale } = Dimensions.get('window')
@@ -44,10 +45,12 @@ export default function Cards({ card }) {
         <Button
           onPress={() => handleAnswer('True', card.correct_answer, setOptionOne)}
           color={optionOne}
+          style={styles.buttonStyles}
         >True</Button>
         <Button
           onPress={() => handleAnswer('False', card.correct_answer, setOptionTwo)}
           color={optionTwo}
+          style={styles.buttonStyles}
         >False</Button>
       </View>
       }
@@ -57,18 +60,22 @@ export default function Cards({ card }) {
         <Button
           onPress={() => handleAnswer(card.answers[0], card.correct_answer, setOptionOne)}
           color={optionOne}
+          style={styles.buttonStyles}
         >{card.answers[0]}</Button>
         <Button
           onPress={() => handleAnswer(card.answers[1], card.correct_answer, setOptionTwo)}
           color={optionTwo}
+          style={styles.buttonStyles}
         >{card.answers[1]}</Button>
         <Button
           onPress={() => handleAnswer(card.answers[2], card.correct_answer, setOptionThree)}
           color={optionThree}
+          style={styles.buttonStyles}
         >{card.answers[2]}</Button>
         <Button
           onPress={() => handleAnswer(card.answers[3], card.correct_answer, setOptionFour)}
           color={optionFour}
+          style={styles.buttonStyles}
         >{card.answers[3]}</Button>
       </View>
       }
@@ -108,10 +115,21 @@ const styles = StyleSheet.create({
   },
   question: {
     fontFamily: 'GothamRoundedBook',
-    fontSize: responsiveFontSize(4)
+    fontSize: responsiveFontSize(2.5),
+    marginBottom: 30,
+    textAlign: 'center',
+    lineHeight: 40
   },
   answer: {
     fontFamily: 'GothamRoundedBook',
-    fontSize: responsiveFontSize(3)
+    fontSize: responsiveFontSize(2),
+    textAlign: 'center',
+    lineHeight: 40
+  },
+  buttonStyles: {
+    borderRadius: 20,
+    borderWidth: 1,
+    width: 280,
+    height: 50
   }
 })
