@@ -128,7 +128,6 @@ const styles = StyleSheet.create({
   },
   buttonStyles: {
     borderRadius: 20,
-    borderWidth: 1,
     width: 280,
     height: 50
   }
