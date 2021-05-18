@@ -1,39 +1,46 @@
 /* eslint-disable react/jsx-key */
-import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, View, Dimensions } from 'react-native'
+import React, { useState } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 import { Button } from 'galio-framework'
 import FlipCard from 'react-native-flip-card'
-import { responsiveFontSize } from 'react-native-responsive-dimensions'
-import color from 'color'
+import { responsiveFontSize, responsiveScreenWidth, responsiveScreenHeight } from 'react-native-responsive-dimensions'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faHeart, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import { LinearGradient } from 'expo-linear-gradient'
 
-const SCREEN_HEIGHT = Dimensions.get('window').height
-const { width, fontScale } = Dimensions.get('window')
 
 export default function Cards({ card }) {
 
-  const [optionOne, setOptionOne] = useState('info')
-  const [optionTwo, setOptionTwo] = useState('info')
-  const [optionThree, setOptionThree] = useState('info')
-  const [optionFour, setOptionFour] = useState('info')
+  console.log(typeof(card.question))
+  if (card.question.includes('&quot;')) {
+    card.question.replace('&quot;', '')
+  }
+
+  const [optionOne, setOptionOne] = useState(['#00A0FF', '#80DED0'])
+  const [optionTwo, setOptionTwo] = useState(['#00A0FF', '#80DED0'])
+  const [optionThree, setOptionThree] = useState(['#00A0FF', '#80DED0'])
+  const [optionFour, setOptionFour] = useState(['#00A0FF', '#80DED0'])
 
   const handleAnswer = (answer, correct, setOption) => {
     if (answer === correct) {
-      setOptionOne('info')
-      setOptionTwo('info')
-      setOptionThree('info')
-      setOptionFour('info')
-      setOption('success')
+      setOptionOne(['#00A0FF', '#80DED0'])
+      setOptionTwo(['#00A0FF', '#80DED0'])
+      setOptionThree(['#00A0FF', '#80DED0'])
+      setOptionFour(['#00A0FF', '#80DED0'])
+      setOption(['#4ca783', '#63dc99'])
     } if (answer !== correct) {
-      setOptionOne('info')
-      setOptionTwo('info')
-      setOptionThree('info')
-      setOptionFour('info')
-      setOption('red')
+      setOptionOne(['#00A0FF', '#80DED0'])
+      setOptionTwo(['#00A0FF', '#80DED0'])
+      setOptionThree(['#00A0FF', '#80DED0'])
+      setOptionFour(['#00A0FF', '#80DED0'])
+      setOption(['#e94a6e', '#f77948'])
     }
   }
 
   return (
     <View>
+      {(card.question.includes('&quot;')) && card.question.replace('&quot;', '')}
       {card.type === 'start' &&
       <View style={styles.card}>
         <Text style={styles.question}>{card.question}</Text>
@@ -42,41 +49,65 @@ export default function Cards({ card }) {
       {card.type === 'boolean' &&
       <View style={styles.card}>
         <Text style={styles.question}>{card.question}</Text>
-        <Button
-          onPress={() => handleAnswer('True', card.correct_answer, setOptionOne)}
-          color={optionOne}
-          style={styles.buttonStyles}
-        >True</Button>
-        <Button
-          onPress={() => handleAnswer('False', card.correct_answer, setOptionTwo)}
-          color={optionTwo}
-          style={styles.buttonStyles}
-        >False</Button>
+        <TouchableOpacity onPress={() => handleAnswer('True', card.correct_answer, setOptionOne)}>
+          <LinearGradient
+            colors={optionOne}
+            start={[0,1]}
+            end={[1,0]}
+            style={styles.buttonStyles}>
+            <Text style={styles.answer}>True</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleAnswer('False', card.correct_answer, setOptionTwo)}>
+          <LinearGradient
+            colors={optionTwo}
+            start={[0,1]}
+            end={[1,0]}
+            style={styles.buttonStyles}>
+            <Text style={styles.answer}>False</Text>
+          </LinearGradient>
+        </TouchableOpacity>
       </View>
       }
       {card.type === 'multiple' &&
       <View style={styles.card}>
         <Text style={styles.question}>{card.question}</Text>
-        <Button
-          onPress={() => handleAnswer(card.answers[0], card.correct_answer, setOptionOne)}
-          color={optionOne}
-          style={styles.buttonStyles}
-        >{card.answers[0]}</Button>
-        <Button
-          onPress={() => handleAnswer(card.answers[1], card.correct_answer, setOptionTwo)}
-          color={optionTwo}
-          style={styles.buttonStyles}
-        >{card.answers[1]}</Button>
-        <Button
-          onPress={() => handleAnswer(card.answers[2], card.correct_answer, setOptionThree)}
-          color={optionThree}
-          style={styles.buttonStyles}
-        >{card.answers[2]}</Button>
-        <Button
-          onPress={() => handleAnswer(card.answers[3], card.correct_answer, setOptionFour)}
-          color={optionFour}
-          style={styles.buttonStyles}
-        >{card.answers[3]}</Button>
+        <TouchableOpacity onPress={() => handleAnswer(card.answers[0], card.correct_answer, setOptionOne)}>
+          <LinearGradient
+            colors={optionOne}
+            start={[0,1]}
+            end={[1,0]}
+            style={styles.buttonStyles}>
+            <Text style={styles.answer}>{card.answers[0]}</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleAnswer(card.answers[1], card.correct_answer, setOptionTwo)}>
+          <LinearGradient
+            colors={optionTwo}
+            start={[0,1]}
+            end={[1,0]}
+            style={styles.buttonStyles}>
+            <Text style={styles.answer}>{card.answers[1]}</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleAnswer(card.answers[2], card.correct_answer, setOptionThree)}>
+          <LinearGradient
+            colors={optionThree}
+            start={[0,1]}
+            end={[1,0]}
+            style={styles.buttonStyles}>
+            <Text style={styles.answer}>{card.answers[2]}</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleAnswer(card.answers[3], card.correct_answer, setOptionFour)}>
+          <LinearGradient
+            colors={optionFour}
+            start={[0,1]}
+            end={[1,0]}
+            style={styles.buttonStyles}>
+            <Text style={styles.answer}>{card.answers[3]}</Text>
+          </LinearGradient>
+        </TouchableOpacity>
       </View>
       }
       {card.type === 'flip' &&
@@ -90,12 +121,20 @@ export default function Cards({ card }) {
           </Text>
         </View>
         <View style={styles.card}>
-          <Text style={styles.answer}>
+          <Text style={styles.flipAnswer}>
             {card.answer}
           </Text>
         </View>
       </FlipCard>
       }
+      <View style={styles.bottomButtons}>
+        <Button style={styles.button}>
+          <FontAwesomeIcon icon={ faTimes } size={ 32 } style={ styles.dislike }/>
+        </Button>
+        <Button style={styles.button}>
+          <FontAwesomeIcon icon={ faHeart } size={ 32 } style={styles.like}/>
+        </Button>
+      </View>
     </View>
   )
 }
@@ -104,11 +143,9 @@ const styles = StyleSheet.create({
   card: {
     borderWidth: 0,
     backgroundColor: 'white',
-    paddingTop: -20,
     padding: 30,
-    marginTop: -20,
-    margin: 10,
-    height: SCREEN_HEIGHT - 220,
+    height: responsiveScreenHeight(85),
+    width: responsiveScreenWidth(90),
     borderRadius: 25,
     alignItems: 'center',
     justifyContent: 'center'
@@ -118,17 +155,48 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(2.5),
     marginBottom: 30,
     textAlign: 'center',
-    lineHeight: 40
+    lineHeight: 30
   },
   answer: {
     fontFamily: 'GothamRoundedBook',
     fontSize: responsiveFontSize(2),
     textAlign: 'center',
-    lineHeight: 40
+    color: 'white'
+  },
+  flipAnswer: {
+    fontFamily: 'GothamRoundedBook',
+    fontSize: responsiveFontSize(2.5),
+    textAlign: 'center',
+    color: 'black'
   },
   buttonStyles: {
+    display: 'flex',
+    margin: 7,
     borderRadius: 20,
-    width: 280,
-    height: 50
+    width: responsiveScreenWidth(80),
+    height: 50,
+    textAlign: 'center',
+    justifyContent: 'center'
+  },
+  bottomButtons: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: -50
+  },
+  button: {
+    backgroundColor: 'white', 
+    borderRadius: 100, 
+    borderColor: '#e7e8e8', 
+    borderWidth: 7, 
+    shadowColor: 'white', 
+    width: 80, 
+    height: 80
+  },
+  like: {
+    color: '#4dcd94'
+  },
+  dislike: {
+    color: '#fb6d69'
   }
 })

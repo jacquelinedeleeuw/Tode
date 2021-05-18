@@ -23,7 +23,6 @@ function WelcomeScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <LinearGradient
-        // Background Linear Gradient
         colors={['#00A0FF', '#80DED0']}
         start={[0,1]}
         end={[1,0]}

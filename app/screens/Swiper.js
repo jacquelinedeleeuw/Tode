@@ -67,6 +67,13 @@ function SwiperComponent() {
     setIndex((index + 1))
   }
 
+  const onSwipedLeft = () => {
+    console.log('swipe left')
+  }
+  const onSwipedRight = () => {
+    console.log('swipe right')
+  }
+
   if (!questions) return null
   return (
     <View style={styles.container}>
@@ -84,6 +91,8 @@ function SwiperComponent() {
         }}
         backgroundColor='lightgray'
         onSwiped={onSwiped}
+        onSwipedLeft={onSwipedLeft}
+        onSwipedRight={onSwipedRight}
         disableBottomSwipe
         disableTopSwipe
       />

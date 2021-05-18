@@ -29,7 +29,8 @@ function App() {
           name="Swiper" 
           component={Swiper} 
           options={{
-            title: 'Tode'
+            title: 'Tode',
+            headerShown: false
             // headerStyle: {
             //   backgroundColor: '#80DED0',
             // },
@@ -38,9 +39,6 @@ function App() {
             //   fontWeight: 'bold',
             // },
           }}
-          // options={{
-          //   headerShown: false
-          // }}
         />
       </Stack.Navigator>
     </NavigationContainer>
