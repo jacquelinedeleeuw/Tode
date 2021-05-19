@@ -1,16 +1,16 @@
 /* eslint-disable react/jsx-key */
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Button } from 'galio-framework'
 import FlipCard from 'react-native-flip-card'
 import { responsiveFontSize, responsiveScreenWidth, responsiveScreenHeight } from 'react-native-responsive-dimensions'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faHeart, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faHeart, faTimes, faUndoAlt, faCog } from '@fortawesome/free-solid-svg-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { LinearGradient } from 'expo-linear-gradient'
 
 
-export default function Cards({ card }) {
+export default function Cards({ card, handleBack, handleLeftSwipe, handleRightSwipe, navigation }) {
 
   if (card.question.includes('&quot;')) {
     card.question = card.question.replaceAll('&quot;', '')
@@ -140,14 +140,22 @@ export default function Cards({ card }) {
           </View>
         </FlipCard>
       }
+      {card.type !== 'flip' &&
       <View style={styles.bottomButtons}>
-        <Button style={styles.button}>
+        <Button style={styles.smallButton} onPress={handleBack}>
+          <FontAwesomeIcon icon={ faUndoAlt } size={ 24 } style={ styles.back }/>
+        </Button>
+        <Button style={styles.button} onPress={handleLeftSwipe}>
           <FontAwesomeIcon icon={ faTimes } size={ 32 } style={ styles.dislike }/>
         </Button>
-        <Button style={styles.button}>
+        <Button style={styles.button} onPress={handleRightSwipe}>
           <FontAwesomeIcon icon={ faHeart } size={ 32 } style={styles.like}/>
         </Button>
+        <Button style={styles.smallButton} onPress={() => navigation.navigate('Settings') }>
+          <FontAwesomeIcon icon={ faCog } size={ 24 } style={ styles.settings }/>
+        </Button>
       </View>
+      }
     </View>
   )
 }
@@ -195,7 +203,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: -50
+    marginTop: -60
   },
   button: {
     backgroundColor: 'white', 
@@ -204,12 +212,29 @@ const styles = StyleSheet.create({
     borderWidth: 7, 
     shadowColor: 'white', 
     width: 80, 
-    height: 80
+    height: 80,
+    margin: 5
+  },
+  smallButton: {
+    backgroundColor: 'white', 
+    borderRadius: 100, 
+    borderColor: '#e7e8e8', 
+    borderWidth: 7, 
+    shadowColor: 'white', 
+    width: 50, 
+    height: 50,
+    margin: 3
   },
   like: {
     color: '#4dcd94'
   },
   dislike: {
     color: '#fb6d69'
+  },
+  back: {
+    color: '#fae298'
+  },
+  settings: {
+    color: '#25b6cb'
   }
 })

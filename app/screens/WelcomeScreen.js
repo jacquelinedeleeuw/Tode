@@ -1,6 +1,4 @@
 import React from 'react'
-// import { NavigationContainer } from '@react-navigation/native';
-// import { createStackNavigator } from '@react-navigation/stack'
 import { StyleSheet, Text, Image, View, SafeAreaView } from 'react-native'
 import { useFonts } from 'expo-font'
 import { Button } from 'galio-framework'
@@ -47,10 +45,7 @@ function WelcomeScreen({ navigation }) {
           round={true}
           borderColor="#ffffff"
           shadowless={true}
-          onPress={() =>
-            // Alert.prompt('What is your name?', 'enter your name below to get started', text => setName(text))
-            navigation.navigate('Swiper')
-          }
+          onPress={() => navigation.navigate('Swiper') }
         >
           <Text style={styles.button}>
             Get Started

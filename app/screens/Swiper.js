@@ -5,9 +5,9 @@ import Swiper from 'react-native-deck-swiper'
 import Cards from './Cards'
 import flip from '../data/flip'
 
-const swiperRef = React.createRef()
+const swiperRef = React.createRef(<Swiper />)
 
-function SwiperComponent() {
+const SwiperComponent = ({ navigation }) => {
 
   const questionArray = []
   const [questions, setQuestions] = useState([])
@@ -67,6 +67,18 @@ function SwiperComponent() {
     setIndex((index + 1))
   }
 
+  const handleLeftSwipe = () => {
+    swiperRef.current.swipeLeft()
+  }
+
+  const handleRightSwipe = () => {
+    swiperRef.current.swipeRight()
+  }
+
+  const handleBack = () => {
+    swiperRef.current.swipeBack()
+  }
+
   const onSwipedLeft = () => {
     console.log('swipe left')
   }
@@ -84,8 +96,12 @@ function SwiperComponent() {
         renderCard={(card) => {
           if (!card) return null
           return (
-            <Cards 
-              card={card} 
+            <Cards
+              handleBack={handleBack}
+              handleLeftSwipe={handleLeftSwipe}
+              handleRightSwipe={handleRightSwipe}
+              card={card}
+              navigation={navigation}
             />
           )
         }}
@@ -93,7 +109,7 @@ function SwiperComponent() {
         onSwiped={onSwiped}
         onSwipedLeft={onSwipedLeft}
         onSwipedRight={onSwipedRight}
-        
+        swipeBackCard={true}
         disableBottomSwipe
         disableTopSwipe
       />

@@ -3319,6 +3319,14 @@ expo-linear-gradient@~9.1.0:
   resolved "https://registry.yarnpkg.com/expo-linear-gradient/-/expo-linear-gradient-9.1.0.tgz#7adfe8284268874134954b8249207938c455a5b3"
   integrity sha512-9W4TxaDrZUzmLzd18+Eo2Ef7ONnuLrHKX0PRyHEGY2/rJCtGiPJtJuR6AS5dkX7WB/Pxlx0zK/p/qDHHw09Uxg==
 
+expo-sensors@~10.1.2:
+  version "10.1.2"
+  resolved "https://registry.yarnpkg.com/expo-sensors/-/expo-sensors-10.1.2.tgz#e27d0683c72fdcf1f7361f3372658b06d77d3c6e"
+  integrity sha512-XTC5ay4XMmv6ughWzdDBMsKwsdBimxUubWUbqLDC1Xye3RzphZ7fky9sfaKsqBONRhUhtAcuHvcoAx6GV5en4A==
+  dependencies:
+    "@expo/config-plugins" "^1.0.18"
+    invariant "^2.2.4"
+
 expo-status-bar@~1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/expo-status-bar/-/expo-status-bar-1.0.4.tgz#d8a4c4418b5868c1606969b12bdee85b6fa7d8a4"
