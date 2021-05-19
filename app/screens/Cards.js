@@ -12,9 +12,23 @@ import { LinearGradient } from 'expo-linear-gradient'
 
 export default function Cards({ card }) {
 
-  console.log(typeof(card.question))
   if (card.question.includes('&quot;')) {
-    card.question.replace('&quot;', '')
+    card.question = card.question.replaceAll('&quot;', '')
+  }
+  
+  if (card.question.includes('&#039;')) {
+    card.question = card.question.replaceAll('&#039;', '')
+  }
+  
+  if (card.type === 'multiple') {
+    card.answers.forEach((item, index) => {
+      if (item.includes('&quot;')) {
+        card.answers[index] = item.replaceAll('&quot;', '')
+      }
+      if (item.includes('&#039;')) {
+        card.answers[index] = item.replaceAll('&#039;', '')
+      }
+    })
   }
 
   const [optionOne, setOptionOne] = useState(['#00A0FF', '#80DED0'])
@@ -40,7 +54,6 @@ export default function Cards({ card }) {
 
   return (
     <View>
-      {(card.question.includes('&quot;')) && card.question.replace('&quot;', '')}
       {card.type === 'start' &&
       <View style={styles.card}>
         <Text style={styles.question}>{card.question}</Text>
@@ -111,21 +124,21 @@ export default function Cards({ card }) {
       </View>
       }
       {card.type === 'flip' &&
-      <FlipCard
-        flipHorizontal={true}
-        flipVertical={false}
-      >
-        <View style={styles.card}>
-          <Text style={styles.question}>
-            {card.question}
-          </Text>
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.flipAnswer}>
-            {card.answer}
-          </Text>
-        </View>
-      </FlipCard>
+        <FlipCard
+          flipHorizontal={true}
+          flipVertical={false}
+        >
+          <View style={styles.card}>
+            <Text style={styles.question}>
+              {card.question}
+            </Text>
+          </View>
+          <View style={styles.card}>
+            <Text style={styles.flipAnswer}>
+              {card.answer}
+            </Text>
+          </View>
+        </FlipCard>
       }
       <View style={styles.bottomButtons}>
         <Button style={styles.button}>

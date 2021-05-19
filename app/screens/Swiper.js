@@ -93,6 +93,7 @@ function SwiperComponent() {
         onSwiped={onSwiped}
         onSwipedLeft={onSwipedLeft}
         onSwipedRight={onSwipedRight}
+        
         disableBottomSwipe
         disableTopSwipe
       />
