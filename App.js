@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import WelcomeScreen from './app/screens/WelcomeScreen'
 import Swiper from './app/screens/Swiper'
 import Settings from './app/screens/Settings'
+import { Button } from 'react-native'
 
 const Stack = createStackNavigator()
 
@@ -45,10 +46,19 @@ const  App = () => {
         <Stack.Screen 
           name="Settings" 
           component={Settings}
-          options={{
+          options={({ navigation }) => ({
             title: 'Tode',
-            headerShown: false
-          }}
+            headerShown: true,
+            headerBackTitleVisible: false,
+            // eslint-disable-next-line react/display-name
+            headerRight: () => (
+              <Button
+                onPress={() => navigation.navigate('Swiper')}
+                title='Done'
+                color='#00A0FF'
+              />
+            )
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>
