@@ -56,6 +56,9 @@ export default function Cards({
       setOptionThree(['#00A0FF', '#80DED0'])
       setOptionFour(['#00A0FF', '#80DED0'])
       setOption(['#4ca783', '#63dc99'])
+      setTimeout(() => {
+        handleRightSwipe()
+      }, 1000)
     }
     if (answer !== correct) {
       setOptionOne(['#00A0FF', '#80DED0'])
@@ -63,6 +66,9 @@ export default function Cards({
       setOptionThree(['#00A0FF', '#80DED0'])
       setOptionFour(['#00A0FF', '#80DED0'])
       setOption(['#e94a6e', '#f77948'])
+      setTimeout(() => {
+        handleLeftSwipe()
+      }, 1000)
     }
   }
 
