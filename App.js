@@ -8,17 +8,16 @@ import { Button } from 'react-native'
 
 const Stack = createStackNavigator()
 
-const  App = () => {
-
+const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen
-          name="Home" 
-          component={WelcomeScreen} 
+          name="Home"
+          component={WelcomeScreen}
           options={{
             title: 'My home',
-            headerShown: false
+            headerShown: false,
             // headerStyle: {
             //   backgroundColor: '#80DED0',
             // },
@@ -28,12 +27,12 @@ const  App = () => {
             // },
           }}
         />
-        <Stack.Screen 
-          name="Swiper" 
+        <Stack.Screen
+          name="Swiper"
           component={Swiper}
           options={{
             title: 'Tode',
-            headerShown: false
+            headerShown: false,
             // headerStyle: {
             //   backgroundColor: '#80DED0',
             // },
@@ -43,8 +42,8 @@ const  App = () => {
             // },
           }}
         />
-        <Stack.Screen 
-          name="Settings" 
+        <Stack.Screen
+          name="Settings"
           component={Settings}
           options={({ navigation }) => ({
             title: 'Tode',
@@ -54,10 +53,10 @@ const  App = () => {
             headerRight: () => (
               <Button
                 onPress={() => navigation.navigate('Swiper')}
-                title='Done'
-                color='#00A0FF'
+                title="Done"
+                color="#00A0FF"
               />
-            )
+            ),
           })}
         />
       </Stack.Navigator>
@@ -66,4 +65,3 @@ const  App = () => {
 }
 
 export default App
-

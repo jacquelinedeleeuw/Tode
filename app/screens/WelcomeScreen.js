@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 import React from 'react'
 import { StyleSheet, Text, Image, View, SafeAreaView } from 'react-native'
 import { useFonts } from 'expo-font'
@@ -5,7 +6,8 @@ import { Button } from 'galio-framework'
 import { LinearGradient } from 'expo-linear-gradient'
 import Logo from '../assets/logo.png'
 
-// import Swiper from './Swiper'
+// // import Swiper from './Swiper'
+// import { Swiper } from 'react-native-deck-swiper'
 
 function WelcomeScreen({ navigation }) {
   const [loaded] = useFonts({
@@ -42,7 +44,11 @@ function WelcomeScreen({ navigation }) {
           round={true}
           borderColor="#ffffff"
           shadowless={true}
-          onPress={() => navigation.navigate('Swiper')}
+          onPress={() => {
+            navigation.navigate('Swiper', {
+              initialise: true,
+            })
+          }}
         >
           <Text style={styles.button}>Get Started</Text>
         </Button>
