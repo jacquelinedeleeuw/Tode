@@ -1,11 +1,44 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import * as SecureStore from 'expo-secure-store'
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native'
 import { responsiveScreenWidth } from 'react-native-responsive-dimensions'
 
-const Settings = (props) => {
-  const currentScore = props.route.params.counter
 
-  console.log(props.route.params.practice)
+const Settings = (props) => {
+
+  let result
+  const [value, setValue] = useState('7')
+  const [key, setKey] = useState('highScore')
+  
+  const currentScore = props.route.params.counter
+  
+  async function save(key, value) {
+    await SecureStore.setItemAsync(key, value)
+  }
+  
+  useEffect(() => {
+    async function getValueFor(key) {
+      result = await SecureStore.getItemAsync(key)
+      if (!result) {
+        setValue('0')
+      } else {
+        setValue(result)
+      }
+    }
+    getValueFor(key)
+  }, [])
+  
+  const saveNewScore = () => {
+    save(key, value)
+  }
+  
+  useEffect(() => {
+    if (currentScore > value) {
+      setValue(currentScore)
+      saveNewScore()
+    }
+  }, [value])
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.textContainer}>
@@ -21,6 +54,7 @@ const Settings = (props) => {
       <View style={{ display: 'flex', flexDirection: 'row' }}>
         <View style={styles.textHalfContainer}>
           <Text>Highest Score</Text>
+          <Text>{value}</Text>
         </View>
         <View style={styles.textHalfContainer}>
           <Text>Current Score</Text>
