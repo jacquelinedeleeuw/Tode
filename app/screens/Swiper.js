@@ -6,13 +6,19 @@ import Cards from './Cards'
 import flip from '../data/flip'
 
 const swiperRef = React.createRef(<Swiper />)
+let counter = 0
 
 const SwiperComponent = ({ navigation, route }) => {
+  
   const { initialise } = route.params
+  const [questions, setQuestions] = useState([])
+  const [practice, setPractice] = useState([])
+  // const [counter, setCounter] = useState(0)
+
 
   const questionArray = []
-  const [questions, setQuestions] = useState([])
 
+  // Get boolean questions
   useEffect(() => {
     const getData = async () => {
       const { data } = await axios.get(
@@ -22,7 +28,7 @@ const SwiperComponent = ({ navigation, route }) => {
     }
     getData()
   }, [])
-
+  // Add boolean questions to array
   const handleBoolean = (booleanQuestions) => {
     booleanQuestions.results.map((item) => {
       questionArray.push({
@@ -34,6 +40,7 @@ const SwiperComponent = ({ navigation, route }) => {
     setQuestions({ ...questions, ...questionArray, ...flip })
   }
 
+  // Get multiple choice questions
   useEffect(() => {
     const getData = async () => {
       const { data } = await axios.get(
@@ -43,7 +50,7 @@ const SwiperComponent = ({ navigation, route }) => {
     }
     getData()
   }, [])
-
+  // Add Multiple choice to array
   const handleMultiple = (multipleQuestions) => {
     multipleQuestions.results.map((item) => {
       const answers = [
@@ -68,15 +75,7 @@ const SwiperComponent = ({ navigation, route }) => {
     setQuestions({ ...questions, ...questionArray, ...flip })
   }
 
-  // useEffect(() => {
-  //   for (let i = 0; i < Object.keys(questions).length; i++) {
-  //     const j = Math.floor(Math.random() * (i + 1))
-  //     const temp = questions[i]
-  //     questions[i] = questions[j]
-  //     questions[j] = temp
-  //   }
-  // }, [initialise])
-
+  // Randomise questions
   const randomiseQuestions = () => {
     for (let i = 0; i < Object.keys(questions).length; i++) {
       const j = Math.floor(Math.random() * (i + 1))
@@ -90,28 +89,26 @@ const SwiperComponent = ({ navigation, route }) => {
     randomiseQuestions()
   }
 
+
   const [index, setIndex] = useState(0)
   const onSwiped = () => {
     setIndex(index + 1)
   }
 
-  const handleLeftSwipe = () => {
-    swiperRef.current.swipeLeft()
+  const handleLeftSwipe = (card) => {
+    swiperRef.current.swipeLeft(card)
   }
-
   const handleRightSwipe = () => {
     swiperRef.current.swipeRight()
   }
-
   const handleBack = () => {
     swiperRef.current.swipeBack()
   }
-
-  const onSwipedLeft = () => {
-    console.log('swipe left')
+  const onSwipedLeft = (card) => {
+    setPractice([...practice, questions[card]])
   }
   const onSwipedRight = () => {
-    console.log('swipe right')
+    counter++ 
   }
 
   if (!questions) return null
@@ -126,10 +123,12 @@ const SwiperComponent = ({ navigation, route }) => {
           return (
             <Cards
               handleBack={handleBack}
-              handleLeftSwipe={handleLeftSwipe}
+              handleLeftSwipe={() => handleLeftSwipe(card)}
               handleRightSwipe={handleRightSwipe}
               card={card}
               navigation={navigation}
+              practice={practice}
+              counter={counter}
             />
           )
         }}

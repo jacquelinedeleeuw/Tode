@@ -6,25 +6,19 @@ import FlipCard from 'react-native-flip-card'
 import {
   responsiveFontSize,
   responsiveScreenWidth,
-  responsiveScreenHeight,
+  responsiveScreenHeight
 } from 'react-native-responsive-dimensions'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import {
   faHeart,
   faTimes,
   faUndoAlt,
-  faCog,
+  faCog
 } from '@fortawesome/free-solid-svg-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { LinearGradient } from 'expo-linear-gradient'
 
-export default function Cards({
-  card,
-  handleBack,
-  handleLeftSwipe,
-  handleRightSwipe,
-  navigation,
-}) {
+export default function Cards({ card, handleBack, handleLeftSwipe, handleRightSwipe, navigation, practice, counter }) {
   if (card.question.includes('&quot;')) {
     card.question = card.question.replaceAll('&quot;', '')
   }
@@ -67,13 +61,13 @@ export default function Cards({
       setOptionFour(['#00A0FF', '#80DED0'])
       setOption(['#e94a6e', '#f77948'])
       setTimeout(() => {
-        handleLeftSwipe()
+        handleLeftSwipe(card)
       }, 1000)
     }
   }
 
   return (
-    <View>
+    <View style={styles.cardcontainer}>
       {card.type === 'start' && (
         <View style={styles.card}>
           <Text style={styles.question}>{card.question}</Text>
@@ -183,25 +177,28 @@ export default function Cards({
           </View>
         </FlipCard>
       )}
-      {card.type !== 'flip' && (
-        <View style={styles.bottomButtons}>
-          <Button style={styles.smallButton} onPress={handleBack}>
-            <FontAwesomeIcon icon={faUndoAlt} size={24} style={styles.back} />
-          </Button>
-          <Button style={styles.button} onPress={handleLeftSwipe}>
-            <FontAwesomeIcon icon={faTimes} size={32} style={styles.dislike} />
-          </Button>
-          <Button style={styles.button} onPress={handleRightSwipe}>
-            <FontAwesomeIcon icon={faHeart} size={32} style={styles.like} />
-          </Button>
-          <Button
-            style={styles.smallButton}
-            onPress={() => navigation.navigate('Settings')}
-          >
-            <FontAwesomeIcon icon={faCog} size={24} style={styles.settings} />
-          </Button>
-        </View>
-      )}
+      {/* {card.type !== 'flip' && ( */}
+      <View style={styles.bottomButtons}>
+        <Button style={styles.smallButton} onPress={handleBack}>
+          <FontAwesomeIcon icon={faUndoAlt} size={24} style={styles.back} />
+        </Button>
+        <Button style={styles.button} onPress={handleLeftSwipe}>
+          <FontAwesomeIcon icon={faTimes} size={32} style={styles.dislike} />
+        </Button>
+        <Button style={styles.button} onPress={handleRightSwipe}>
+          <FontAwesomeIcon icon={faHeart} size={32} style={styles.like} />
+        </Button>
+        <Button
+          style={styles.smallButton}
+          onPress={() => navigation.navigate('Settings', {
+            practice: practice,
+            counter: counter
+          })}
+        >
+          <FontAwesomeIcon icon={faCog} size={24} style={styles.settings} />
+        </Button>
+      </View>
+      {/* )} */}
     </View>
   )
 }
@@ -215,26 +212,29 @@ const styles = StyleSheet.create({
     width: responsiveScreenWidth(90),
     borderRadius: 25,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   question: {
     fontFamily: 'GothamRoundedBook',
     fontSize: responsiveFontSize(2.5),
     marginBottom: 30,
     textAlign: 'center',
-    lineHeight: 30,
+    lineHeight: 30
   },
   answer: {
     fontFamily: 'GothamRoundedBook',
     fontSize: responsiveFontSize(2),
     textAlign: 'center',
-    color: 'white',
+    color: 'white'
   },
   flipAnswer: {
     fontFamily: 'GothamRoundedBook',
     fontSize: responsiveFontSize(2.5),
     textAlign: 'center',
-    color: 'black',
+    color: 'black'
+  },
+  cardcontainer: {
+    position: 'absolute'
   },
   buttonStyles: {
     display: 'flex',
@@ -243,13 +243,13 @@ const styles = StyleSheet.create({
     width: responsiveScreenWidth(80),
     height: 50,
     textAlign: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   bottomButtons: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: -60,
+    marginTop: -60
   },
   button: {
     backgroundColor: 'white',
@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
     shadowColor: 'white',
     width: 80,
     height: 80,
-    margin: 5,
+    margin: 5
   },
   smallButton: {
     backgroundColor: 'white',
@@ -269,18 +269,18 @@ const styles = StyleSheet.create({
     shadowColor: 'white',
     width: 50,
     height: 50,
-    margin: 3,
+    margin: 3
   },
   like: {
-    color: '#4dcd94',
+    color: '#4dcd94'
   },
   dislike: {
-    color: '#fb6d69',
+    color: '#fb6d69'
   },
   back: {
-    color: '#fae298',
+    color: '#fae298'
   },
   settings: {
-    color: '#25b6cb',
-  },
+    color: '#25b6cb'
+  }
 })

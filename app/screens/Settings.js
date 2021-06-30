@@ -2,26 +2,30 @@ import React from 'react'
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native'
 import { responsiveScreenWidth } from 'react-native-responsive-dimensions'
 
-const Settings = () => {
+const Settings = (props) => {
+  const currentScore = props.route.params.counter
+
+  console.log(props.route.params.practice)
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.textContainer}>
-        <Text>Settings content</Text>
+        <Text>Your practice questions</Text>
       </View>
-      <View style={{ display: 'flex', flexDirection: 'row' }}>
-        <View style={styles.textHalfContainer}>
-          <Text>More Settings content</Text>
-        </View>
-        <View style={styles.textHalfContainer}>
-          <Text>Even more Settings content</Text>
-        </View>
+      <View style={styles.textContainer}>
+        <Text>SOMETHING ELSE OR WHATEVER</Text>
       </View>
       <Text style={styles.subheader}>Personal Settings</Text>
       <View style={styles.textContainer}>
-        <Text>Maybe a settings slider like Tinder?</Text>
+        <Text>Your name</Text>
       </View>
-      <View style={styles.textContainer}>
-        <Text>Settings content</Text>
+      <View style={{ display: 'flex', flexDirection: 'row' }}>
+        <View style={styles.textHalfContainer}>
+          <Text>Highest Score</Text>
+        </View>
+        <View style={styles.textHalfContainer}>
+          <Text>Current Score</Text>
+          <Text>{currentScore}</Text>
+        </View>
       </View>
     </SafeAreaView>
   )
