@@ -6,9 +6,6 @@ import { Button } from 'galio-framework'
 import { LinearGradient } from 'expo-linear-gradient'
 import Logo from '../assets/logo.png'
 
-// // import Swiper from './Swiper'
-// import { Swiper } from 'react-native-deck-swiper'
-
 function WelcomeScreen({ navigation }) {
   const [loaded] = useFonts({
     GothamRoundedBold: require('../assets/fonts/GothamRoundedBold.ttf'),
@@ -71,20 +68,17 @@ const styles = StyleSheet.create({
     height: '110%',
   },
   text: {
-    // fontFamily: 'GothamRoundedBold',
     fontSize: 50,
     color: 'white',
     fontWeight: '700',
     letterSpacing: -1,
   },
   subtext: {
-    // fontFamily: 'GothamRoundedBook',
     fontSize: 20,
     color: 'white',
     marginBottom: 40,
   },
   button: {
-    // fontFamily: 'GothamRoundedBook',
     color: '#00A0FF',
     fontSize: 18,
   },

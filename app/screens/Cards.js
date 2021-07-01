@@ -1,24 +1,15 @@
-/* eslint-disable react/jsx-key */
 import React, { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { Button } from 'galio-framework'
 import FlipCard from 'react-native-flip-card'
 import {
   responsiveFontSize,
   responsiveScreenWidth,
   responsiveScreenHeight
 } from 'react-native-responsive-dimensions'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import {
-  faHeart,
-  faTimes,
-  faUndoAlt,
-  faCog
-} from '@fortawesome/free-solid-svg-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { LinearGradient } from 'expo-linear-gradient'
 
-export default function Cards({ card, handleBack, handleLeftSwipe, handleRightSwipe, navigation, practice, counter }) {
+export default function Cards({ card, handleLeftSwipe, handleRightSwipe }) {
   if (card.question.includes('&quot;')) {
     card.question = card.question.replaceAll('&quot;', '')
   }
@@ -177,33 +168,14 @@ export default function Cards({ card, handleBack, handleLeftSwipe, handleRightSw
           </View>
         </FlipCard>
       )}
-      {/* {card.type !== 'flip' && ( */}
-      <View style={styles.bottomButtons}>
-        <Button style={styles.smallButton} onPress={handleBack}>
-          <FontAwesomeIcon icon={faUndoAlt} size={24} style={styles.back} />
-        </Button>
-        <Button style={styles.button} onPress={handleLeftSwipe}>
-          <FontAwesomeIcon icon={faTimes} size={32} style={styles.dislike} />
-        </Button>
-        <Button style={styles.button} onPress={handleRightSwipe}>
-          <FontAwesomeIcon icon={faHeart} size={32} style={styles.like} />
-        </Button>
-        <Button
-          style={styles.smallButton}
-          onPress={() => navigation.navigate('Settings', {
-            practice: practice,
-            counter: counter
-          })}
-        >
-          <FontAwesomeIcon icon={faCog} size={24} style={styles.settings} />
-        </Button>
-      </View>
-      {/* )} */}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  cardcontainer: {
+    position: 'absolute'
+  },
   card: {
     borderWidth: 0,
     backgroundColor: 'white',
@@ -233,9 +205,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'black'
   },
-  cardcontainer: {
-    position: 'absolute'
-  },
   buttonStyles: {
     display: 'flex',
     margin: 7,
@@ -244,43 +213,5 @@ const styles = StyleSheet.create({
     height: 50,
     textAlign: 'center',
     justifyContent: 'center'
-  },
-  bottomButtons: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: -60
-  },
-  button: {
-    backgroundColor: 'white',
-    borderRadius: 100,
-    borderColor: '#e7e8e8',
-    borderWidth: 7,
-    shadowColor: 'white',
-    width: 80,
-    height: 80,
-    margin: 5
-  },
-  smallButton: {
-    backgroundColor: 'white',
-    borderRadius: 100,
-    borderColor: '#e7e8e8',
-    borderWidth: 7,
-    shadowColor: 'white',
-    width: 50,
-    height: 50,
-    margin: 3
-  },
-  like: {
-    color: '#4dcd94'
-  },
-  dislike: {
-    color: '#fb6d69'
-  },
-  back: {
-    color: '#fae298'
-  },
-  settings: {
-    color: '#25b6cb'
   }
 })

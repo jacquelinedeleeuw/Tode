@@ -2,8 +2,17 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { StyleSheet, View } from 'react-native'
 import Swiper from 'react-native-deck-swiper'
+import { Button } from 'galio-framework'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import {
+  faHeart,
+  faTimes,
+  faUndoAlt,
+  faCog
+} from '@fortawesome/free-solid-svg-icons'
 import Cards from './Cards'
 import flip from '../data/flip'
+import * as SecureStore from 'expo-secure-store'
 
 const swiperRef = React.createRef(<Swiper />)
 let counter = 0
@@ -13,10 +22,11 @@ const SwiperComponent = ({ navigation, route }) => {
   const { initialise } = route.params
   const [questions, setQuestions] = useState([])
   const [practice, setPractice] = useState([])
-  // const [counter, setCounter] = useState(0)
-
-
   const questionArray = []
+
+  async function save(key, value) {
+    await SecureStore.setItemAsync(key, value)
+  }
 
   // Get boolean questions
   useEffect(() => {
@@ -34,7 +44,7 @@ const SwiperComponent = ({ navigation, route }) => {
       questionArray.push({
         question: item.question,
         correct_answer: item.correct_answer,
-        type: item.type,
+        type: item.type
       })
     })
     setQuestions({ ...questions, ...questionArray, ...flip })
@@ -57,7 +67,7 @@ const SwiperComponent = ({ navigation, route }) => {
         item.correct_answer,
         item.incorrect_answers[0],
         item.incorrect_answers[1],
-        item.incorrect_answers[2],
+        item.incorrect_answers[2]
       ]
       for (let i = 0; i < answers.length; i++) {
         const j = Math.floor(Math.random() * (i + 1))
@@ -69,7 +79,7 @@ const SwiperComponent = ({ navigation, route }) => {
         question: item.question,
         correct_answer: item.correct_answer,
         type: item.type,
-        answers: answers,
+        answers: answers
       })
     })
     setQuestions({ ...questions, ...questionArray, ...flip })
@@ -89,7 +99,6 @@ const SwiperComponent = ({ navigation, route }) => {
     randomiseQuestions()
   }
 
-
   const [index, setIndex] = useState(0)
   const onSwiped = () => {
     setIndex(index + 1)
@@ -105,12 +114,20 @@ const SwiperComponent = ({ navigation, route }) => {
     swiperRef.current.swipeBack()
   }
   const onSwipedLeft = (card) => {
-    setPractice([...practice, questions[card]])
+    const question = JSON.stringify(questions[card])
+    const newQuestions = [...practice, question]
+    setPractice([...practice, question])
+    handlePracticeSave(newQuestions)
   }
   const onSwipedRight = () => {
-    counter++ 
+    counter++
   }
 
+  const handlePracticeSave = (newQuestions) => {
+    const newPractice = JSON.stringify(newQuestions)
+    save('questions', newPractice)
+  }
+  
   if (!questions) return null
   return (
     <View style={styles.container}>
@@ -126,9 +143,6 @@ const SwiperComponent = ({ navigation, route }) => {
               handleLeftSwipe={() => handleLeftSwipe(card)}
               handleRightSwipe={handleRightSwipe}
               card={card}
-              navigation={navigation}
-              practice={practice}
-              counter={counter}
             />
           )
         }}
@@ -140,6 +154,27 @@ const SwiperComponent = ({ navigation, route }) => {
         disableBottomSwipe
         disableTopSwipe
       />
+      <View style={styles.bottomButtons}>
+        <Button style={styles.smallButton} onPress={handleBack}>
+          <FontAwesomeIcon icon={faUndoAlt} size={24} style={styles.back} />
+        </Button>
+        <Button style={styles.button} onPress={handleLeftSwipe}>
+          <FontAwesomeIcon icon={faTimes} size={32} style={styles.dislike} />
+        </Button>
+        <Button style={styles.button} onPress={handleRightSwipe}>
+          <FontAwesomeIcon icon={faHeart} size={32} style={styles.like} />
+        </Button>
+        <Button
+          style={styles.smallButton}
+          onPress={() => navigation.navigate('Settings', {
+            practice: practice, 
+            counter: counter,
+            navigation: navigation
+          })}
+        >
+          <FontAwesomeIcon icon={faCog} size={24} style={styles.settings} />
+        </Button>
+      </View>
     </View>
   )
 }
@@ -148,8 +183,46 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end'
   },
+  bottomButtons: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: -60
+  },
+  button: {
+    backgroundColor: 'white',
+    borderRadius: 100,
+    borderColor: '#e7e8e8',
+    borderWidth: 7,
+    shadowColor: 'white',
+    width: 80,
+    height: 80,
+    margin: 5
+  },
+  smallButton: {
+    backgroundColor: 'white',
+    borderRadius: 100,
+    borderColor: '#e7e8e8',
+    borderWidth: 7,
+    shadowColor: 'white',
+    width: 50,
+    height: 50,
+    margin: 3
+  },
+  like: {
+    color: '#4dcd94'
+  },
+  dislike: {
+    color: '#fb6d69'
+  },
+  back: {
+    color: '#fae298'
+  },
+  settings: {
+    color: '#25b6cb'
+  }
 })
 
 export default SwiperComponent

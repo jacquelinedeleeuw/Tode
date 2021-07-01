@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import * as SecureStore from 'expo-secure-store'
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, TextInput } from 'react-native'
 import { responsiveScreenWidth } from 'react-native-responsive-dimensions'
 
 
 const Settings = (props) => {
 
   let result
-  const [value, setValue] = useState('7')
-  const [key, setKey] = useState('highScore')
+  const [highScore, setHighScore] = useState()
+  const [name, setName] = useState('')
   
   const currentScore = props.route.params.counter
+  const navigation = props.route.params.navigation
   
   async function save(key, value) {
     await SecureStore.setItemAsync(key, value)
@@ -19,47 +20,69 @@ const Settings = (props) => {
   useEffect(() => {
     async function getValueFor(key) {
       result = await SecureStore.getItemAsync(key)
-      if (!result) {
-        setValue('0')
-      } else {
-        setValue(result)
+      if (key === 'highScore') {
+        if (!result) {
+          setHighScore('0')
+        } else {
+          setHighScore(result)
+        }
+      }
+      if (key === 'name') {
+        if (!result) {
+          setName('stranger')
+        } else {
+          setName(result)
+        }
       }
     }
-    getValueFor(key)
+    getValueFor('name')
+    getValueFor('highScore')
   }, [])
   
-  const saveNewScore = () => {
-    save(key, value)
-  }
-  
   useEffect(() => {
-    if (currentScore > value) {
-      setValue(currentScore)
-      saveNewScore()
+    if (currentScore > highScore) {
+      const newHigh = currentScore.toString()
+      save('highScore', newHigh)
+      setHighScore(currentScore)
     }
-  }, [value])
+  }, [highScore])
+
+  useEffect(() => {
+    save('name', name)
+  }, [name])
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.textContainer}>
-        <Text>Your practice questions</Text>
+        <Text style={styles.header}>Hi {name}!</Text>
       </View>
       <View style={styles.textContainer}>
-        <Text>SOMETHING ELSE OR WHATEVER</Text>
-      </View>
-      <Text style={styles.subheader}>Personal Settings</Text>
-      <View style={styles.textContainer}>
-        <Text>Your name</Text>
+        <Text 
+          onPress={() => navigation.navigate('PracticeIndex', {
+            navigation: navigation
+          })}
+        >
+          Your practice questions
+        </Text>
       </View>
       <View style={{ display: 'flex', flexDirection: 'row' }}>
         <View style={styles.textHalfContainer}>
           <Text>Highest Score</Text>
-          <Text>{value}</Text>
+          <Text>{highScore}</Text>
         </View>
         <View style={styles.textHalfContainer}>
           <Text>Current Score</Text>
           <Text>{currentScore}</Text>
         </View>
+      </View>
+      <Text style={styles.subheader}>Personal Settings</Text>
+      <View style={styles.textContainer}>
+        <Text>Change your name below:</Text>
+        <TextInput 
+          style={styles.input}
+          placeholder='e.g. John Doe'
+          onChangeText={(value) => setName(value)}
+        />
       </View>
     </SafeAreaView>
   )
@@ -107,8 +130,10 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     shadowOpacity: 0.1
   },
+  header: {
+    fontSize: 25
+  },
   subheader: {
-    // fontFamily: 'GothamRoundedBold',
     fontSize: 20,
     textTransform: 'uppercase',
     alignSelf: 'flex-start',
@@ -117,9 +142,15 @@ const styles = StyleSheet.create({
     color: '#9b9b9b'
   },
   text: {
-    // fontFamily: 'GothamRoundedBold',
     fontSize: 30,
     letterSpacing: -1
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#777',
+    padding: 8,
+    margin: 10,
+    width: 200
   }
 })
 

@@ -4,7 +4,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 import WelcomeScreen from './app/screens/WelcomeScreen'
 import Swiper from './app/screens/Swiper'
 import Settings from './app/screens/Settings'
-import { Button } from 'react-native'
+import PracticeIndex from './app/screens/PracticeIndex'
+import PracticeCard from './app/screens/PracticeCard'
 
 const Stack = createStackNavigator()
 
@@ -17,14 +18,7 @@ const App = () => {
           component={WelcomeScreen}
           options={{
             title: 'My home',
-            headerShown: false,
-            // headerStyle: {
-            //   backgroundColor: '#80DED0',
-            // },
-            // headerTintColor: '#fff',
-            // headerTitleStyle: {
-            //   fontWeight: 'bold',
-            // },
+            headerShown: false
           }}
         />
         <Stack.Screen
@@ -32,31 +26,34 @@ const App = () => {
           component={Swiper}
           options={{
             title: 'Tode',
-            headerShown: false,
-            // headerStyle: {
-            //   backgroundColor: '#80DED0',
-            // },
-            // headerTintColor: '#fff',
-            // headerTitleStyle: {
-            //   fontWeight: 'bold',
-            // },
+            headerShown: false
           }}
         />
         <Stack.Screen
           name="Settings"
           component={Settings}
-          options={({ navigation }) => ({
+          options={() => ({
             title: 'Tode',
             headerShown: true,
-            headerBackTitleVisible: false,
-            // eslint-disable-next-line react/display-name
-            headerRight: () => (
-              <Button
-                onPress={() => navigation.navigate('Swiper')}
-                title="Done"
-                color="#00A0FF"
-              />
-            ),
+            headerBackTitleVisible: false
+          })}
+        />
+        <Stack.Screen
+          name="PracticeIndex"
+          component={PracticeIndex}
+          options={() => ({
+            title: 'Practice',
+            headerShown: true,
+            headerBackTitleVisible: false
+          })}
+        />
+        <Stack.Screen
+          name="PracticeCard"
+          component={PracticeCard}
+          options={() => ({
+            title: 'Practice',
+            headerShown: false,
+            headerBackTitleVisible: false
           })}
         />
       </Stack.Navigator>
