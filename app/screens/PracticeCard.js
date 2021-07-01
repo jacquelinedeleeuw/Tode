@@ -36,6 +36,10 @@ const PracticeCard = (props) => {
     navigation.navigate('PracticeIndex')
   }
 
+  const handleLeftSwipe = () => {
+    navigation.navigate('PracticeIndex')
+  }
+
   if (!question) return null
   return (
     <View style={styles.container}>
@@ -45,6 +49,7 @@ const PracticeCard = (props) => {
       >
         <Cards
           handleRightSwipe={() => handleRightSwipe(question)}
+          handleLeftSwipe={() => handleLeftSwipe()}
           card={question}
           navigation={navigation}
         />
@@ -56,7 +61,7 @@ const PracticeCard = (props) => {
         >
           <FontAwesomeIcon icon={faUndoAlt} size={24} style={styles.back} />
         </Button>
-        <Button 
+        <Button
           style={styles.button} 
           onPress={() => navigation.navigate('PracticeIndex')}
         >
