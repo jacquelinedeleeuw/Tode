@@ -4,14 +4,12 @@ import { StyleSheet, Text, View, SafeAreaView, TextInput } from 'react-native'
 import { responsiveScreenWidth } from 'react-native-responsive-dimensions'
 
 
-const Settings = (props) => {
+const Settings = ({ navigation }) => {
 
   let result
   const [highScore, setHighScore] = useState()
+  const [currentScore, setCurrentScore] = useState()
   const [name, setName] = useState('')
-  
-  const currentScore = props.route.params.counter
-  const navigation = props.route.params.navigation
   
   async function save(key, value) {
     await SecureStore.setItemAsync(key, value)
@@ -34,9 +32,17 @@ const Settings = (props) => {
           setName(result)
         }
       }
+      if (key === 'currentScore') {
+        if (!result) {
+          setCurrentScore('0')
+        } else {
+          setCurrentScore(result)
+        }
+      }
     }
     getValueFor('name')
     getValueFor('highScore')
+    getValueFor('currentScore')
   }, [])
   
   useEffect(() => {
@@ -59,10 +65,19 @@ const Settings = (props) => {
       <View style={styles.textContainer}>
         <Text 
           onPress={() => navigation.navigate('PracticeIndex', {
-            navigation: navigation
+            initialise: true
           })}
         >
-          Your practice questions
+          Click here for your practice questions
+        </Text>
+      </View>
+      <View style={styles.textContainer}>
+        <Text 
+          onPress={() => navigation.navigate('Break', {
+            initialise: true
+          })}
+        >
+          Click here if you need a FUN break
         </Text>
       </View>
       <View style={{ display: 'flex', flexDirection: 'row' }}>
@@ -147,7 +162,8 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#777',
+    borderRadius: 5,
+    borderColor: 'lightgray',
     padding: 8,
     margin: 10,
     width: 200

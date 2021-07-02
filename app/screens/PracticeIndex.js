@@ -72,9 +72,9 @@ const styles = StyleSheet.create({
     margin: 5,
     marginTop: 15,
     borderRadius: 10,
-    width: responsiveScreenWidth(46),
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    width: responsiveScreenWidth(97),
+    alignItems: 'flex-start',
+    justifyContent: 'center',
     shadowColor: 'black',
     shadowOffset: {
       width: 0,

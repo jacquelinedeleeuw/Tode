@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Image, SafeAreaView } from 'react-native'
 import Swiper from 'react-native-deck-swiper'
 import { Button } from 'galio-framework'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -11,93 +11,72 @@ import {
   faCog
 } from '@fortawesome/free-solid-svg-icons'
 import Cards from './Cards'
-import flip from '../data/flip'
-import * as SecureStore from 'expo-secure-store'
+import memes from '../data/memes'
 
 const swiperRef = React.createRef(<Swiper />)
-let counter = 0
 
-const SwiperComponent = ({ navigation, route }) => {
+const Break = ({ navigation }) => {
   
-  const { initialise } = route.params
-  const [questions, setQuestions] = useState([])
-  const [practice, setPractice] = useState([])
-  const questionArray = []
+  const [jokes, setJokes] = useState([])
+  const jokesArray = []
 
-  async function save(key, value) {
-    await SecureStore.setItemAsync(key, value)
-  }
-
-  // Get boolean questions
+  // Get single jokes
   useEffect(() => {
     const getData = async () => {
       const { data } = await axios.get(
-        'https://opentdb.com/api.php?amount=35&category=18&type=boolean'
+        'https://v2.jokeapi.dev/joke/Programming?type=single&amount=10'
       )
-      handleBoolean(data)
+      handleJokes(data)
     }
     getData()
-    save('currentScore', '0')
   }, [])
-  // Add boolean questions to array
-  const handleBoolean = (booleanQuestions) => {
-    booleanQuestions.results.map((item) => {
-      questionArray.push({
-        question: item.question,
-        correct_answer: item.correct_answer,
+  // Add single jokes to array
+  const handleJokes = (jokes) => {
+    jokes.jokes.map((item) => {
+      jokesArray.push({
+        question: item.joke,
         type: item.type
       })
     })
-    setQuestions({ ...questions, ...questionArray, ...flip })
+    memes.map(item => {
+      jokesArray.push({
+        question: item.question,
+        type: item.type
+      })
+    })
+    randomiseJokes()
   }
 
-  // Get multiple choice questions
   useEffect(() => {
     const getData = async () => {
       const { data } = await axios.get(
-        'https://opentdb.com/api.php?amount=50&category=18&difficulty=medium&type=multiple'
+        'https://v2.jokeapi.dev/joke/Programming?type=twopart&amount=10'
       )
-      handleMultiple(data)
+      handleTwoPartJokes(data)
     }
     getData()
   }, [])
-  // Add Multiple choice to array
-  const handleMultiple = (multipleQuestions) => {
-    multipleQuestions.results.map((item) => {
-      const answers = [
-        item.correct_answer,
-        item.incorrect_answers[0],
-        item.incorrect_answers[1],
-        item.incorrect_answers[2]
-      ]
-      for (let i = 0; i < answers.length; i++) {
-        const j = Math.floor(Math.random() * (i + 1))
-        const temp = answers[i]
-        answers[i] = answers[j]
-        answers[j] = temp
-      }
-      questionArray.push({
-        question: item.question,
-        correct_answer: item.correct_answer,
-        type: item.type,
-        answers: answers
+
+  const handleTwoPartJokes = (jokes) => {
+    jokes.jokes.map((item) => {
+      jokesArray.push({
+        question: item.setup,
+        answer: item.delivery,
+        type: item.type
       })
     })
-    setQuestions({ ...questions, ...questionArray, ...flip })
+    randomiseJokes()
   }
 
-  // Randomise questions
-  const randomiseQuestions = () => {
-    for (let i = 0; i < Object.keys(questions).length; i++) {
+  // Randomise jokes
+  const randomiseJokes = () => {
+    for (let i = 0; i < Object.keys(jokesArray).length; i++) {
       const j = Math.floor(Math.random() * (i + 1))
-      const temp = questions[i]
-      questions[i] = questions[j]
-      questions[j] = temp
+      const temp = jokesArray[i]
+      jokesArray[i] = jokesArray[j]
+      jokesArray[j] = temp
     }
-  }
-
-  if (initialise === true) {
-    randomiseQuestions()
+    setJokes(jokesArray)
   }
 
   const [index, setIndex] = useState(0)
@@ -114,36 +93,26 @@ const SwiperComponent = ({ navigation, route }) => {
   const handleBack = () => {
     swiperRef.current.swipeBack()
   }
-  const onSwipedLeft = (card) => {
-    const question = JSON.stringify(questions[card])
-    const newQuestions = [...practice, question]
-    setPractice([...practice, question])
-    handlePracticeSave(newQuestions)
+  const onSwipedLeft = () => {
+    // console.log('left')
   }
   const onSwipedRight = () => {
-    counter++
-    counter = counter.toString()
-    save('currentScore', counter)
+    // console.log('right')
   }
 
-  const handlePracticeSave = (newQuestions) => {
-    const newPractice = JSON.stringify(newQuestions)
-    save('questions', newPractice)
-  }
-  
-  if (!questions) return null
+  if (!jokes) return null
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Swiper
         ref={swiperRef}
-        cards={questions}
+        cards={jokes}
         cardIndex={index}
         renderCard={(card) => {
           if (!card) return null
           return (
             <Cards
               handleBack={handleBack}
-              handleLeftSwipe={() => handleLeftSwipe(card)}
+              handleLeftSwipe={() => handleLeftSwipe}
               handleRightSwipe={handleRightSwipe}
               card={card}
             />
@@ -170,13 +139,13 @@ const SwiperComponent = ({ navigation, route }) => {
         <Button
           style={styles.smallButton}
           onPress={() => navigation.navigate('Settings', {
-            initialise: true
+            navigation: navigation
           })}
         >
           <FontAwesomeIcon icon={faCog} size={24} style={styles.settings} />
         </Button>
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
 
@@ -226,4 +195,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default SwiperComponent
+export default Break

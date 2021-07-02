@@ -6,6 +6,7 @@ import Swiper from './app/screens/Swiper'
 import Settings from './app/screens/Settings'
 import PracticeIndex from './app/screens/PracticeIndex'
 import PracticeCard from './app/screens/PracticeCard'
+import Break from './app/screens/Break'
 
 const Stack = createStackNavigator()
 
@@ -52,6 +53,15 @@ const App = () => {
           component={PracticeCard}
           options={() => ({
             title: 'Practice',
+            headerShown: false,
+            headerBackTitleVisible: false
+          })}
+        />
+        <Stack.Screen
+          name="Break"
+          component={Break}
+          options={() => ({
+            title: 'Break',
             headerShown: false,
             headerBackTitleVisible: false
           })}

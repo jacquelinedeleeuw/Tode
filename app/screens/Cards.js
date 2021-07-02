@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Image } from 'react-native'
 import FlipCard from 'react-native-flip-card'
 import {
   responsiveFontSize,
@@ -59,10 +59,31 @@ export default function Cards({ card, handleLeftSwipe, handleRightSwipe }) {
 
   return (
     <View style={styles.cardcontainer}>
-      {card.type === 'start' && (
+      {card.type === 'meme' && (
+        <View style={styles.card}>
+          <View>
+            <Image 
+              style={styles.image} 
+              source={{ 
+                uri: card.question
+              }} />
+          </View>
+        </View>
+      )}
+      {card.type === 'single' && (
         <View style={styles.card}>
           <Text style={styles.question}>{card.question}</Text>
         </View>
+      )}
+      {card.type === 'twopart' && (
+        <FlipCard flipHorizontal={true} flipVertical={false}>
+          <View style={styles.card}>
+            <Text style={styles.question}>{card.question}</Text>
+          </View>
+          <View style={styles.card}>
+            <Text style={styles.flipAnswer}>{card.answer}</Text>
+          </View>
+        </FlipCard>
       )}
       {card.type === 'boolean' && (
         <View style={styles.card}>
@@ -185,6 +206,11 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  image: {
+    height: responsiveScreenHeight(50),
+    width: responsiveScreenWidth(90),
+    resizeMode: 'contain'
   },
   question: {
     fontFamily: 'GothamRoundedBook',
